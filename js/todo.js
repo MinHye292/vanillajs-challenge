@@ -7,18 +7,22 @@ const TODOS_KEY = "todos"
 let toDos = [];
 
 function saveToDos(){
+  console.log("Saving toDos:", toDos); // 👉 추가
   localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
 }
 
 function deleteToDo(event) {
   const li = event.target.parentElement;
   li.remove();
+  toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
+  saveToDos();
 }
 
-function paintToDo(newTodo) {
+function paintToDo(newTodoObj) {
   const li = document.createElement("li");
+  li.id = newTodoObj.id;
   const span = document.createElement("span");
-  span.innerText = newTodo;
+  span.innerText = newTodoObj.text;
   const button = document.createElement("button");
   button.innerText = "X";
   button.addEventListener("click", deleteToDo);
@@ -31,8 +35,12 @@ function handleToDoSubmit(event) {
   event.preventDefault();
   const newTodo = toDoInput.value;
   toDoInput.value = "";
-  toDos.push(newTodo);
-  paintToDo(newTodo);
+  const newTodoObj = {
+    text: newTodo,
+    id: Date.now(),
+  }
+  toDos.push(newTodoObj);
+  paintToDo(newTodoObj);
   saveToDos();
 }
 
@@ -47,3 +55,7 @@ if(savedToDos !== null){
   parsedToDos.forEach(paintToDo);
 }
 
+function sexyFiter(){ //반드시 true를 리턴해야 함.
+  return true;
+
+}
