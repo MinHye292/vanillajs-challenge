@@ -7,7 +7,6 @@ const TODOS_KEY = "todos"
 let toDos = [];
 
 function saveToDos(){
-  console.log("Saving toDos:", toDos); // 👉 추가
   localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
 }
 
@@ -50,12 +49,6 @@ const savedToDos = localStorage.getItem(TODOS_KEY); //string
 
 if(savedToDos !== null){
   const parsedToDos = JSON.parse(savedToDos); //array
-  console.log(parsedToDos)
   toDos = parsedToDos;
   parsedToDos.forEach(paintToDo);
-}
-
-function sexyFiter(){ //반드시 true를 리턴해야 함.
-  return true;
-
 }
